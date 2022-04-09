@@ -1,0 +1,28 @@
+{
+    "db": [
+        {
+            "name": "Martin",
+            "id": "04526e5ae26480",
+            "credits": 0,
+            "admin": true
+        },
+        {
+            "name": "Thomas",
+            "id": "b47d13d2",
+            "credits": 0,
+            "admin": false
+        },
+        {
+            "name": "Robin",
+            "id": "04fc546ae26480",
+            "credits": 0,
+            "admin": false
+        },
+        {
+            "name": "Unset",
+            "id": "04f2d66ae26480",
+            "credits": 0,
+            "admin": false
+        }
+    ]
+}
