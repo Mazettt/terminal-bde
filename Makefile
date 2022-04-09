@@ -11,7 +11,8 @@ NAME	=	mysql_client
 SRC_DIR	=	src/
 EXTENSION	=	.c
 
-SRC_FILES	=	get_datas	\
+SRC_FILES	=	free	\
+				get_datas	\
 				main	\
 				modify_database	\
 				utils	\
