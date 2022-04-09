@@ -1,3 +1,6 @@
 libnfc
 utils
 a.out
+mysql_client
+vgcore*
+*.o

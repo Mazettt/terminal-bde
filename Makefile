@@ -11,7 +11,10 @@ NAME	=	mysql_client
 SRC_DIR	=	src/
 EXTENSION	=	.c
 
-SRC_FILES	=	main	\
+SRC_FILES	=	get_datas	\
+				main	\
+				modify_database	\
+				utils	\
 
 SRC	=	$(addprefix $(SRC_DIR), $(addsuffix $(EXTENSION), $(SRC_FILES)))
 
