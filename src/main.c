@@ -20,18 +20,24 @@ bool is_nbr(char *str)
 
 bool check_if_admin(MYSQL *con, char *id_card)
 {
-    MYSQL_ROW row = get_row_from_id(con, id_card);
+    MYSQL_RES *res = NULL;
+    MYSQL_ROW row = NULL;
     my_datas_t d = {NULL, 0, false};
 
+    row = get_row_from_id(con, res, id_card);
     if (row == NULL) {
         printf("Card not found.\n");
+        free(row);
+        mysql_free_result(res);
         return (false);
     }
     d = get_datas_one_row(row);
-    if (d.admin)
+    if (d.admin) {
+        mysql_free_result(res);
         return (true);
-    else {
+    } else {
         printf("You are not admin\n");
+        mysql_free_result(res);
         return (false);
     }
 }
@@ -84,23 +90,31 @@ void process_not_in_database(MYSQL *con, char *id_card)
     free(line);
 }
 
-void big_loop(MYSQL *con)
+bool big_loop(MYSQL *con)
 {
     char *line = NULL;
     size_t s;
     my_datas_t d = {NULL, 0, false};
+    MYSQL_RES *res = NULL;
     MYSQL_ROW row = NULL;
 
     printf("Id card: ");
-    getline(&line, &s, stdin);
+    if (getline(&line, &s, stdin) == -1) {
+        free(row);
+        return (false);
+    }
     line[strlen(line) - 1] = '\0';
-    if ((row = get_row_from_id(con, line)) == NULL) {
+    if ((row = get_row_from_id(con, res, line)) == NULL) {
         process_not_in_database(con, line);
-        return;
+        free(row);
+        mysql_free_result(res);
+        return (true);
     }
     d = get_datas_one_row(row);
     print_datas(d);
     free(line);
+    mysql_free_result(res);
+    return (true);
 }
 
 int main(int ac, char **av)
@@ -119,21 +133,8 @@ int main(int ac, char **av)
     result = get_all_datas_from_table(con);
     print_all_table(result);
 
-    while (true) {
-        big_loop(con);
-    }
+    while (big_loop(con));
 
-    // add_data_to_table(con, d);
-
-    result = get_all_datas_from_table(con);
-    print_all_table(result);
-    modify_one_row(con, "Martin", 30);
-    result = get_all_datas_from_table(con);
-    print_all_table(result);
-    modify_one_row(con, "Martin", 31);
-    result = get_all_datas_from_table(con);
-    print_all_table(result);
-    // printf("Number of rows: %ld\n\n", get_number_of_rows(result));
     mysql_free_result(result);
     mysql_close(con);
 }

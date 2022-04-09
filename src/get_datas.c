@@ -18,7 +18,7 @@ long get_number_of_rows(MYSQL_RES *result)
 MYSQL_RES *get_all_datas_from_table(MYSQL *con)
 {
     char buff[2048];
-    MYSQL_RES *res;
+    MYSQL_RES *res = NULL;
 
     sprintf(buff, "SELECT ID_CARD, CREDITS, ADMIN FROM %s", c_my_table);
     if (mysql_query(con, buff) != 0) {
@@ -30,10 +30,9 @@ MYSQL_RES *get_all_datas_from_table(MYSQL *con)
     return (res);
 }
 
-MYSQL_ROW get_row_from_id(MYSQL *con, char *id_card)
+MYSQL_ROW get_row_from_id(MYSQL *con, MYSQL_RES *res_buff, char *id_card)
 {
     char buff[2048];
-    MYSQL_RES *res;
     MYSQL_ROW row = NULL;
 
     sprintf(buff, "SELECT ID_CARD, CREDITS, ADMIN FROM %s WHERE ID_CARD = \"%s\"", c_my_table, id_card);
@@ -42,8 +41,8 @@ MYSQL_ROW get_row_from_id(MYSQL *con, char *id_card)
         printf("%s\n", mysql_error(con));
         exit(1);
     }
-    res = mysql_store_result(con);
-    row = mysql_fetch_row(res);
+    res_buff = mysql_store_result(con);
+    row = mysql_fetch_row(res_buff);
     return (row);
 }
 

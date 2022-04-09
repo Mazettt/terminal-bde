@@ -25,9 +25,7 @@ void print_all_table(MYSQL_RES *result)
 
     while((row = mysql_fetch_row(result)) != NULL) {
         d = get_datas_one_row(row);
-        printf("ID_CARD: %s\n", d.id_card);
-        printf("CREDITS: %d\n", d.credits);
-        printf("ADMIN: %d\n", d.admin);
-        printf("\n");
+        print_datas(d);
     }
+    free(row);
 }
