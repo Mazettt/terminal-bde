@@ -11,7 +11,22 @@ NAME	=	mysql_client
 SRC_DIR	=	src/
 EXTENSION	=	.c
 
-SRC_FILES	=	free	\
+SRC_FILES	=	graphics/events/events	\
+				graphics/events/key_pressed	\
+				graphics/events/key_released	\
+				graphics/events/mouse	\
+				graphics/init/init_all	\
+				graphics/init/init_screens	\
+				graphics/init/init_spritesheets	\
+				graphics/interface/functions_pointers/menu	\
+				graphics/interface/check_click_buttons	\
+				graphics/interface/check_mouse_on_buttons	\
+				graphics/spritesheets/utils_sprites	\
+				graphics/big_loop	\
+				graphics/clean_window	\
+				graphics/destroy_all	\
+				graphics/utils	\
+				free	\
 				get_datas	\
 				main	\
 				modify_database	\
@@ -64,7 +79,7 @@ all:	$(NAME)
 $(NAME):	$(OBJ)
 	@echo -e "\033[1;34m\n============== Files compilation ok =============="
 	@echo -e "\033[0m"
-	$(CC) `mysql_config --cflags --libs` -o $(NAME) $(OBJ) $(FLAGS)
+	$(CC) `mysql_config --cflags --libs` -o $(NAME) $(OBJ) $(FLAGS) $(CSFML_FLAGS)
 	@echo -e "\033[1;32m\n================= Compilation done ================="
 	@echo -e "\033[0m"
 

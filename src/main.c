@@ -121,20 +121,27 @@ int main(int ac, char **av)
 {
     MYSQL *con;
     MYSQL_RES *result = NULL;
-    char buff[2048];
-    my_datas_t d = {.id_card = "Martin", .credits = 20, .admin = true};
+    bde_csfml_t *csfml_all = malloc(sizeof(bde_csfml_t));
 
+    init_all_csfml(csfml_all);
+    if (!csfml_all->begin.window || !csfml_all->begin.framebuffer)
+        return (1);
+    sfWindow_setFramerateLimit((sfWindow *)csfml_all->begin.window, 60);
+    csfml_all->begin.fps.clock = sfClock_create();
     con = mysql_init(NULL);
     if (mysql_real_connect(con, "127.0.0.1", "USERS_DB_OWNER", "1234", c_my_db, 3306, NULL, 0) == NULL) {
         printf("The authentication failed with the following message:\n");
         printf("%s\n", mysql_error(con));
-        exit(1);
+        return (1);
     }
     result = get_all_datas_from_table(con);
     print_all_table(result);
-
-    while (big_loop(con));
-
+    while (sfRenderWindow_isOpen(csfml_all->begin.window)) {
+        clean_window(&csfml_all->begin, sfWhite);
+        big_loop_graphics(csfml_all);
+    }
+    destroy_all(csfml_all);
     mysql_free_result(result);
     mysql_close(con);
+    return (0);
 }
