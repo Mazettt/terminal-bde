@@ -13,5 +13,8 @@
     #include "csfml_structs.h"
     #include "csfml_includes.h"
     #include "csfml_enums.h"
+    #include <string.h>
+
+char *get_id_card(int argc, const char *argv[]);
 
 #endif

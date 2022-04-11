@@ -28,6 +28,7 @@ SRC_FILES	=	graphics/events/events	\
 				graphics/utils	\
 				free	\
 				get_datas	\
+				get_id_card	\
 				main	\
 				modify_database	\
 				utils	\
@@ -79,7 +80,7 @@ all:	$(NAME)
 $(NAME):	$(OBJ)
 	@echo -e "\033[1;34m\n============== Files compilation ok =============="
 	@echo -e "\033[0m"
-	$(CC) `mysql_config --cflags --libs` -o $(NAME) $(OBJ) $(FLAGS) $(CSFML_FLAGS)
+	$(CC) `mysql_config --cflags --libs` -o $(NAME) $(OBJ) $(FLAGS) $(CSFML_FLAGS) -lnfc
 	@echo -e "\033[1;32m\n================= Compilation done ================="
 	@echo -e "\033[0m"
 

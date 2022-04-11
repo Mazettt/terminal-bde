@@ -136,6 +136,12 @@ int main(int ac, char **av)
     }
     result = get_all_datas_from_table(con);
     print_all_table(result);
+    csfml_all->sql.con = con;
+    csfml_all->sql.res = result;
+    csfml_all->current_d = (my_datas_t){NULL, 0, false};
+    csfml_all->text_numpad = malloc(sizeof(char) * 11);
+    csfml_all->text_numpad[0] = '\0';
+    csfml_all->clock_screens = sfClock_create();
     while (sfRenderWindow_isOpen(csfml_all->begin.window)) {
         clean_window(&csfml_all->begin, sfWhite);
         big_loop_graphics(csfml_all);

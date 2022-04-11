@@ -7,6 +7,8 @@
 
 #include "../../../include/bde.h"
 
+EXT_INTS
+
 void set_one_sprite(char *filename, spritesheet_t *spritesheet,
 beginning_t *begin, init_sprite_t init_sprite)
 {
@@ -53,6 +55,9 @@ sfVector2f pos)
 void toggle_spritesheet_scene(bde_csfml_t *csfml_all, bool status, int *screen_i,
 spritesheet_t *spritesheet)
 {
+    if (status == true && (screen_i == screen_add_credits || screen_i == screen_buy))
+        csfml_all->text_numpad[0] = '\0';
     for (int i = 0; screen_i[i] != -1; ++i)
         spritesheet[screen_i[i]].active = status;
+    sfClock_restart(csfml_all->clock_screens);
 }

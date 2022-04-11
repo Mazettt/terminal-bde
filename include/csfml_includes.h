@@ -54,6 +54,7 @@ void clean_window(beginning_t *begin, sfColor color);
 void init_csfml(beginning_t *beginning);
 int my_rand(int min, int max);
 bool check_mouse_on_one_button(sfVector2i pos, sfFloatRect collision);
+char *my_itoa(int nb);
 
 // utils sprites
 void set_one_sprite(char *filename, spritesheet_t *spritesheet, beginning_t *begin, init_sprite_t init_sprite);
@@ -80,5 +81,6 @@ void button_num_cancel(bde_csfml_t *csfml_all);
 void button_buy(bde_csfml_t *csfml_all);
 void button_add_credits(bde_csfml_t *csfml_all);
 void button_display_credits(bde_csfml_t *csfml_all);
+void button_back(bde_csfml_t *csfml_all);
 
 #endif

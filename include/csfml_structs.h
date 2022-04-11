@@ -104,10 +104,19 @@ typedef struct {
 } spritesheet_t;
 
 typedef struct {
+    MYSQL *con;
+    MYSQL_RES *res;
+} my_sql_t;
+
+typedef struct {
     beginning_t begin;
     events_t all_events;
     spritesheet_t *spritesheet;
+    my_sql_t sql;
     bool *screens;
+    sfClock *clock_screens;
+    char *text_numpad;
+    my_datas_t current_d;
 } bde_csfml_t;
 
 #endif
