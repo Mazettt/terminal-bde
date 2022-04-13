@@ -29,7 +29,8 @@ void check_if_in_db(bde_csfml_t *csfml_all, char *card)
 {
     if (get_row_from_id(csfml_all->sql.con, csfml_all->sql.res, card) == NULL) {
         add_data_to_table(csfml_all->sql.con, (my_datas_t){card, 0, false});
-        printf("%s added in database\n", card);
+        if (PRINT_ALL)
+            printf("%s added in database\n", card);
         csfml_all->screens[SC_MENU] = false;
         csfml_all->screens[SC_ADDED_TO_DB] = true;
         toggle_spritesheet_scene(csfml_all, false, screen_menu, csfml_all->spritesheet);
@@ -42,13 +43,13 @@ void change_scene_if_card(bde_csfml_t *csfml_all)
     char *card = NULL;
 
     card = get_id_card(csfml_all);
-    printf("test\n");
     if (card != NULL) {
-        printf("card = %s\n", card);
         csfml_all->current_d = get_infos_from_id(csfml_all->sql.con, card);
-        printf("csfml_all->current_d.id_card = %s\n", csfml_all->current_d.id_card);
-        printf("csfml_all->current_d.credits = %d\n", csfml_all->current_d.credits);
-        printf("csfml_all->current_d.admin = %d\n", csfml_all->current_d.admin);
+        if (PRINT_ALL) {
+            printf("csfml_all->current_d.id_card = %s\n", csfml_all->current_d.id_card);
+            printf("csfml_all->current_d.credits = %d\n", csfml_all->current_d.credits);
+            printf("csfml_all->current_d.admin = %d\n", csfml_all->current_d.admin);
+        }
         csfml_all->screens[SC_SCAN] = false;
         csfml_all->screens[SC_MENU] = true;
         toggle_spritesheet_scene(csfml_all, false, screen_scan, csfml_all->spritesheet);
@@ -64,13 +65,13 @@ void change_scene_if_admin_card(bde_csfml_t *csfml_all)
     my_datas_t d = {NULL, 0, false};
 
     card = get_id_card(csfml_all);
-    printf("test admin\n");
     if (card != NULL) {
-        printf("card admin = %s\n", card);
         d = get_infos_from_id(csfml_all->sql.con, card);
-        printf("d.id_card = %s\n", d.id_card);
-        printf("d.credits = %d\n", d.credits);
-        printf("d.admin = %d\n", d.admin);
+        if (PRINT_ALL) {
+            printf("d.id_card = %s\n", d.id_card);
+            printf("d.credits = %d\n", d.credits);
+            printf("d.admin = %d\n", d.admin);
+        }
         if (d.admin && (strcmp(d.id_card, csfml_all->current_d.id_card) || !strcmp(d.id_card, "04526e5ae26480"))) {
             csfml_all->screens[SC_SCAN_ADMIN] = false;
             csfml_all->screens[SC_ADD_CREDITS] = true;

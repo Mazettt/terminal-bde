@@ -100,8 +100,8 @@ main(int argc, const char *argv[])
     }
   }
 
-  const uint8_t uiPollNr = 20;
-  const uint8_t uiPeriod = 2;
+  const uint8_t uiPollNr = 1;
+  const uint8_t uiPeriod = 1;
   const nfc_modulation nmModulations[6] = {
     { .nmt = NMT_ISO14443A, .nbr = NBR_106 },
     { .nmt = NMT_ISO14443B, .nbr = NBR_106 },
@@ -110,7 +110,7 @@ main(int argc, const char *argv[])
     { .nmt = NMT_JEWEL, .nbr = NBR_106 },
     { .nmt = NMT_ISO14443BICLASS, .nbr = NBR_106 },
   };
-  const size_t szModulations = 6;
+  const size_t szModulations = 1;
 
   nfc_target nt;
   int res = 0;

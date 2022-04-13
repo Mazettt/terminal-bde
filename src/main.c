@@ -13,14 +13,21 @@ const char *c_my_table = "USERS_CREDITS";
 void init_nfc(bde_csfml_t *csfml_all)
 {
     nfc_init(&csfml_all->nfc.context);
-    if (csfml_all->nfc.context == NULL)
+    if (csfml_all->nfc.context == NULL) {
+        fprintf(stderr, "Unable to init libnfc (malloc)");
         exit(84);
-    printf("nfc version = %s\n", nfc_version());
+    }
+    printf("nfc version: %s\n", nfc_version());
     csfml_all->nfc.pnd = nfc_open(csfml_all->nfc.context, NULL);
-    if (csfml_all->nfc.pnd == NULL)
+    if (csfml_all->nfc.pnd == NULL) {
+        fprintf(stderr, "Unable to open NFC device.");
+        nfc_exit(csfml_all->nfc.context);
         exit(84);
+    }
     if (nfc_initiator_init(csfml_all->nfc.pnd) < 0) {
         nfc_perror(csfml_all->nfc.pnd, "nfc_initiator_init");
+        nfc_close(csfml_all->nfc.pnd);
+        nfc_exit(csfml_all->nfc.context);
         exit(84);
     }
 }
@@ -44,7 +51,8 @@ int main(int ac, char **av)
         return (1);
     }
     result = get_all_datas_from_table(con);
-    print_all_table(result);
+    if (PRINT_ALL)
+        print_all_table(result);
     csfml_all->sql.con = con;
     csfml_all->sql.res = result;
     csfml_all->current_d = (my_datas_t){NULL, 0, false};
