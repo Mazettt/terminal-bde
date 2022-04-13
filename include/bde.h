@@ -15,6 +15,6 @@
     #include "csfml_enums.h"
     #include <string.h>
 
-char *get_id_card(int argc, const char *argv[]);
+char *get_id_card(bde_csfml_t *csfml_all);
 
 #endif

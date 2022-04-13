@@ -12,26 +12,23 @@ SRC_DIR	=	src/
 EXTENSION	=	.c
 
 SRC_FILES	=	graphics/events/events	\
-				graphics/events/key_pressed	\
-				graphics/events/key_released	\
-				graphics/events/mouse	\
 				graphics/init/init_all	\
 				graphics/init/init_screens	\
 				graphics/init/init_spritesheets	\
-				graphics/interface/functions_pointers/menu	\
+				graphics/interface/buttons	\
 				graphics/interface/check_click_buttons	\
 				graphics/interface/check_mouse_on_buttons	\
 				graphics/spritesheets/utils_sprites	\
 				graphics/big_loop	\
 				graphics/clean_window	\
 				graphics/destroy_all	\
+				graphics/draw_all	\
 				graphics/utils	\
-				free	\
 				get_datas	\
 				get_id_card	\
 				main	\
 				modify_database	\
-				utils	\
+				print_database	\
 
 SRC	=	$(addprefix $(SRC_DIR), $(addsuffix $(EXTENSION), $(SRC_FILES)))
 

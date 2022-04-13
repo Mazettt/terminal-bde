@@ -1,5 +1,11 @@
-#include <stdlib.h>
-#include <nfc/nfc.h>
+/*
+** EPITECH PROJECT, 2021
+** terminal_bde
+** File description:
+** get_id_card.c
+*/
+
+#include "../include/bde.h"
 
 char *print_hex(const uint8_t *pbtData, const size_t szBytes)
 {
@@ -15,36 +21,17 @@ char *print_hex(const uint8_t *pbtData, const size_t szBytes)
     return (buff);
 }
 
-char *get_id_card(int argc, const char *argv[])
+char *get_id_card(bde_csfml_t *csfml_all)
 {
-    nfc_device *pnd;
-    nfc_target nt;
-    nfc_context *context;
     char *res = NULL;
-
-    nfc_init(&context);
-    if (context == NULL) {
-        return (NULL);
-    }
-    const char *acLibnfcVersion = nfc_version();
-    (void)argc;
-    pnd = nfc_open(context, NULL);
-    if (pnd == NULL) {
-        return (NULL);
-    }
-    if (nfc_initiator_init(pnd) < 0) {
-        fprintf(stderr, "my err\n");
-        nfc_perror(pnd, "nfc_initiator_init");
-        return (NULL);
-    }
+    nfc_target nt;
     const nfc_modulation nmMifare = {
         .nmt = NMT_ISO14443A,
         .nbr = NBR_106,
     };
-    if (nfc_initiator_select_passive_target(pnd, nmMifare, NULL, 0, &nt) > 0) {
+
+    if (nfc_initiator_select_passive_target(csfml_all->nfc.pnd, nmMifare, NULL, 0, &nt) > 0) {
         res = print_hex(nt.nti.nai.abtUid, nt.nti.nai.szUidLen);
     }
-    nfc_close(pnd);
-    nfc_exit(context);
     return (res);
 }

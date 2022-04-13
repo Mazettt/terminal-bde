@@ -13,8 +13,10 @@
     #include <SFML/Audio.h>
     #include <sys/stat.h>
     #include <stdbool.h>
+    #include <nfc/nfc.h>
     #include <stdlib.h>
     #include <unistd.h>
+    #include <stdlib.h>
     #include <fcntl.h>
     #include <stdio.h>
     #include <stdio.h>
@@ -53,36 +55,12 @@ typedef struct {
     bool left;
     bool left_released;
     bool right;
-    int move_x;
-    int move_y;
     sfVector2i pos;
 } mouse_t;
 
 typedef struct {
-    bool up;
-    bool down;
-    bool click;
-} mouse_wheel_t;
-
-typedef struct {
-    bool left;
-    bool right;
-    bool up;
-    bool down;
-    bool page_up;
-    bool page_down;
-    bool z;
-    bool q;
-    bool s;
-    bool d;
-    bool e;
     bool escape;
-    bool space;
-    bool ctrl;
-    bool tab;
-    bool enter;
     mouse_t mouse;
-    mouse_wheel_t mouse_wheel;
 } events_t;
 
 // typedef struct {
@@ -109,10 +87,16 @@ typedef struct {
 } my_sql_t;
 
 typedef struct {
+    nfc_context *context;
+    nfc_device *pnd;
+} nfc_poll_t;
+
+typedef struct {
     beginning_t begin;
     events_t all_events;
     spritesheet_t *spritesheet;
     my_sql_t sql;
+    nfc_poll_t nfc;
     bool *screens;
     sfClock *clock_screens;
     char *text_numpad;

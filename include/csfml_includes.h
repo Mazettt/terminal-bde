@@ -23,6 +23,7 @@
 
 void bde_graphics(void);
 void big_loop_graphics(bde_csfml_t *csfml_all);
+void draw_all(bde_csfml_t *csfml_all);
 
 // events
 void events_key_pressed(bde_csfml_t *csfml_all, sfEvent event);

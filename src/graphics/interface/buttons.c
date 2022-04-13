@@ -5,7 +5,7 @@
 ** menu.c
 */
 
-#include "../../../../include/bde.h"
+#include "../../../include/bde.h"
 
 EXT_INTS
 
@@ -131,8 +131,6 @@ void button_num_check(bde_csfml_t *csfml_all)
         modify_one_row(csfml_all->sql.con, csfml_all->current_d.id_card, csfml_all->current_d.credits + atoi(csfml_all->text_numpad));
         csfml_all->current_d.credits = get_nbr_credits(csfml_all->sql.con, csfml_all->current_d.id_card);
     }
-    // for (int i = 0; i < NBR_SC; ++i)
-        // csfml_all->screens[i] = false;
 }
 
 void button_num_cancel(bde_csfml_t *csfml_all)
