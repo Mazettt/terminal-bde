@@ -26,7 +26,10 @@ void draw_all_texts(bde_csfml_t *csfml_all)
         write_text(&csfml_all->begin, (init_text_t){buff, 20, (sfVector2f){10, HEIGHT - 35}, sfBlack});
     }
     if (csfml_all->screens[SC_DEBITED]) {
-        sprintf(buff, "with %s credits.", csfml_all->text_numpad);
+        if (csfml_all->text_numpad[0] == '\0')
+            sprintf(buff, "with 0 credits.");
+        else
+            sprintf(buff, "with %s credits.", csfml_all->text_numpad);
         write_text(&csfml_all->begin, (init_text_t){"You have been debited", 30, (sfVector2f){WIDTH / 2 - 160, 30}, sfBlack});
         write_text(&csfml_all->begin, (init_text_t){buff, 30, (sfVector2f){WIDTH / 2 - 100, 80}, sfBlack});
     }

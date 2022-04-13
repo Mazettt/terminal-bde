@@ -95,15 +95,19 @@ void check_timeout_screen(bde_csfml_t *csfml_all)
 void big_loop_graphics(bde_csfml_t *csfml_all)
 {
     float time = sfClock_getElapsedTime(csfml_all->begin.fps.clock).microseconds;
+    my_datas_t d = {NULL, 0, false};
 
     my_events(csfml_all);
-    if (csfml_all->screens[SC_SCAN])
+    if (csfml_all->screens[SC_SCAN]) {
+        csfml_all->current_d = d;
         change_scene_if_card(csfml_all);
+    }
     if (csfml_all->screens[SC_SCAN_ADMIN])
         change_scene_if_admin_card(csfml_all);
     if (!csfml_all->screens[SC_SCAN])
         check_timeout_screen(csfml_all);
-    // printf("current_d.id_card = %s\n", csfml_all->current_d.id_card);
+    if (PRINT_ALL)
+        printf("curren card: %s\n", csfml_all->current_d.id_card);
     check_click_buttons(csfml_all);
     check_mouse_on_all_buttons(csfml_all);
     draw_all(csfml_all);
