@@ -50,8 +50,10 @@ void my_events(bde_csfml_t *csfml_all)
         if (event.type == sfEvtKeyPressed)
             if (sfKeyEscape == event.key.code)
                 sfRenderWindow_close(csfml_all->begin.window);
-        if (event.type == sfEvtMouseButtonPressed || event.type == sfEvtMouseButtonReleased)
+        if (event.type == sfEvtMouseButtonPressed || event.type == sfEvtMouseButtonReleased) {
             events_mouse_global(event, &csfml_all->begin, &csfml_all->all_events);
+            sfClock_restart(csfml_all->clock_screens);
+        }
     }
     csfml_all->all_events.mouse.pos = sfMouse_getPositionRenderWindow(csfml_all->begin.window);
 }
