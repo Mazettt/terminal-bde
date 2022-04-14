@@ -35,7 +35,7 @@ void init_nfc(bde_csfml_t *csfml_all)
 int main(int ac, char **av)
 {
     bde_csfml_t *csfml_all = malloc(sizeof(bde_csfml_t));
-    MYSQL *con;
+    MYSQL *con = NULL;
     MYSQL_RES *result = NULL;
 
     init_nfc(csfml_all);
