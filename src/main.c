@@ -44,7 +44,6 @@ int main(int ac, char **av)
     if (!csfml_all->begin.window || !csfml_all->begin.framebuffer)
         return (1);
     sfWindow_setFramerateLimit((sfWindow *)csfml_all->begin.window, 60);
-    csfml_all->begin.fps.clock = sfClock_create();
     con = mysql_init(NULL);
     if (mysql_real_connect(con, "127.0.0.1", "USERS_DB_OWNER", "1234", c_my_db, 3306, NULL, 0) == NULL) {
         printf("The authentication failed with the following message:\n");
@@ -52,14 +51,10 @@ int main(int ac, char **av)
         return (1);
     }
     result = get_all_datas_from_table(con);
-    if (PRINT_ALL)
-        print_all_table(result);
     csfml_all->sql.con = con;
     csfml_all->sql.res = result;
-    csfml_all->current_d = (my_datas_t){NULL, 0, false};
-    csfml_all->text_numpad = malloc(sizeof(char) * 11);
-    csfml_all->text_numpad[0] = '\0';
-    csfml_all->clock_screens = sfClock_create();
+    if (PRINT_ALL)
+        print_all_table(result);
     printf("Paiement bde v1.0 ready.\n");
     while (sfRenderWindow_isOpen(csfml_all->begin.window)) {
         clean_window(&csfml_all->begin, sfWhite);
