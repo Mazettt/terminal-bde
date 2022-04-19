@@ -145,6 +145,14 @@ void button_num_cancel(bde_csfml_t *csfml_all)
     csfml_all->screens[SC_MENU] = true;
 }
 
+void button_return(bde_csfml_t *csfml_all)
+{
+    int len = strlen(csfml_all->text_numpad);
+
+    if (len >= 1)
+        csfml_all->text_numpad[len - 1] = '\0';
+}
+
 void button_buy(bde_csfml_t *csfml_all)
 {
     toggle_spritesheet_scene(csfml_all, false, screen_menu, csfml_all->spritesheet);

@@ -18,20 +18,26 @@ void draw_spritesheets(beginning_t *begin, spritesheet_t *spritesheet)
 void draw_all_texts(bde_csfml_t *csfml_all)
 {
     char buff[50];
+    sfVector2f pos = {WIDTH / 2, 50};
+
     if (csfml_all->screens[SC_ADD_CREDITS] || csfml_all->screens[SC_BUY]) {
-        write_text(&csfml_all->begin, (init_text_t){csfml_all->text_numpad, 50, (sfVector2f){WIDTH / 2 - 30, 10}, sfBlack});
+        if (strlen(csfml_all->text_numpad) == 2)
+            pos.x -= 25;
+        else if (strlen(csfml_all->text_numpad) == 1)
+            pos.x -= 10;
+        write_text(&csfml_all->begin, (init_text_t){csfml_all->text_numpad, 50, pos, sfBlack});
     }
     if (csfml_all->screens[SC_MENU]) {
         sprintf(buff, "You have %d credits.", csfml_all->current_d.credits);
-        write_text(&csfml_all->begin, (init_text_t){buff, 20, (sfVector2f){10, HEIGHT - 35}, sfBlack});
+        write_text(&csfml_all->begin, (init_text_t){buff, 25, (sfVector2f){20, HEIGHT - 40}, sfBlack});
     }
     if (csfml_all->screens[SC_DEBITED]) {
         if (csfml_all->text_numpad[0] == '\0')
             sprintf(buff, "with 0 credits.");
         else
             sprintf(buff, "with %s credits.", csfml_all->text_numpad);
-        write_text(&csfml_all->begin, (init_text_t){"You have been debited", 30, (sfVector2f){WIDTH / 2 - 160, 30}, sfBlack});
-        write_text(&csfml_all->begin, (init_text_t){buff, 30, (sfVector2f){WIDTH / 2 - 100, 80}, sfBlack});
+        write_text(&csfml_all->begin, (init_text_t){"You have been debited", 30, (sfVector2f){WIDTH / 2 - 160, HEIGHT / 4 - 40}, sfBlack});
+        write_text(&csfml_all->begin, (init_text_t){buff, 30, (sfVector2f){WIDTH / 2 - 100, HEIGHT / 4}, sfBlack});
     }
 }
 

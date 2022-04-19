@@ -13,7 +13,7 @@
     #define RADIAN(x) x * 3.14159265359 / 180
     #define FUNCTIONS_BUTTONS {button_num_0, button_num_1, button_num_2, button_num_3, \
     button_num_4, button_num_5, button_num_6, button_num_7, button_num_8, button_num_9, \
-    button_num_check, button_num_cancel, button_back, button_add_credits, button_buy, nothing, nothing, nothing, nothing}
+    button_num_check, button_num_cancel, button_back, button_return, button_add_credits, button_buy, nothing, nothing, nothing, nothing}
     #define EXT_INTS extern int screen_menu[];  \
     extern int screen_buy[];    \
     extern int screen_add_credits[];    \
@@ -24,8 +24,8 @@
     extern int screen_no_enouth[];  \
 
 enum size_window {
-    WIDTH = 500,
-    HEIGHT = 350
+    WIDTH = 1024,
+    HEIGHT = 600
 };
 
 enum sprites {
@@ -42,6 +42,7 @@ enum sprites {
     SP_CHECK,
     SP_CANCEL,
     SP_BACK,
+    SP_RETURN,
     SP_ADD_CREDITS,
     SP_BUY,
     SP_SCAN,

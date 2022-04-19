@@ -8,8 +8,8 @@
 #include "../../../include/bde.h"
 
 const int screen_menu[] = {SP_ADD_CREDITS, SP_BUY, SP_BACK, -1};
-const int screen_buy[] = {SP_0, SP_1, SP_2, SP_3, SP_4, SP_5, SP_6, SP_7, SP_8, SP_9, SP_CHECK, SP_CANCEL, -1};
-const int screen_add_credits[] = {SP_0, SP_1, SP_2, SP_3, SP_4, SP_5, SP_6, SP_7, SP_8, SP_9, SP_CHECK, SP_CANCEL, -1};
+const int screen_buy[] = {SP_0, SP_1, SP_2, SP_3, SP_4, SP_5, SP_6, SP_7, SP_8, SP_9, SP_CHECK, SP_CANCEL, SP_RETURN, -1};
+const int screen_add_credits[] = {SP_0, SP_1, SP_2, SP_3, SP_4, SP_5, SP_6, SP_7, SP_8, SP_9, SP_CHECK, SP_CANCEL, SP_RETURN, -1};
 const int screen_scan[] = {SP_SCAN, -1};
 const int screen_scan_admin[] = {SP_SCAN_ADMIN, SP_BACK, -1};
 const int screen_added_in_db[] = {SP_ADDED_IN_DB, SP_BACK, -1};

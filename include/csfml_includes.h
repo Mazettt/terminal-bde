@@ -82,5 +82,6 @@ void button_buy(bde_csfml_t *csfml_all);
 void button_add_credits(bde_csfml_t *csfml_all);
 void button_display_credits(bde_csfml_t *csfml_all);
 void button_back(bde_csfml_t *csfml_all);
+void button_return(bde_csfml_t *csfml_all);
 
 #endif
