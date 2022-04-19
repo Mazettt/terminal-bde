@@ -17,7 +17,8 @@ void init_nfc(bde_csfml_t *csfml_all)
         fprintf(stderr, "Unable to init libnfc (malloc)");
         exit(84);
     }
-    printf("nfc version: %s\n", nfc_version());
+    if (PRINT_ALL)
+        printf("nfc version: %s\n", nfc_version());
     csfml_all->nfc.pnd = nfc_open(csfml_all->nfc.context, NULL);
     if (csfml_all->nfc.pnd == NULL) {
         fprintf(stderr, "Unable to open NFC device.");
@@ -59,6 +60,7 @@ int main(int ac, char **av)
     csfml_all->text_numpad = malloc(sizeof(char) * 11);
     csfml_all->text_numpad[0] = '\0';
     csfml_all->clock_screens = sfClock_create();
+    printf("Paiement bde v1.0 ready.\n");
     while (sfRenderWindow_isOpen(csfml_all->begin.window)) {
         clean_window(&csfml_all->begin, sfWhite);
         big_loop_graphics(csfml_all);
