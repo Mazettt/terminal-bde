@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-NAME	=	mysql_client
+NAME	=	bde
 
 # src
 SRC_DIR	=	src/
