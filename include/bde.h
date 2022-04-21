@@ -17,5 +17,6 @@
     #define PRINT_ALL 0
 
 char *get_id_card(bde_csfml_t *csfml_all);
+char *my_getpass(void);
 
 #endif

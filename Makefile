@@ -26,6 +26,7 @@ SRC_FILES	=	graphics/events/events	\
 				graphics/utils	\
 				get_datas	\
 				get_id_card	\
+				get_password	\
 				main	\
 				modify_database	\
 				print_database	\

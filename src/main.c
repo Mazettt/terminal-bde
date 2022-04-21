@@ -7,7 +7,7 @@
 
 #include "../include/bde.h"
 
-const char *c_my_db = "BDE_PAIEMENT_TERMINAL";
+const char *c_my_db = "bde";
 const char *c_my_table = "USERS_CREDITS";
 
 void init_nfc(bde_csfml_t *csfml_all)
@@ -38,18 +38,20 @@ int main(int ac, char **av)
     bde_csfml_t *csfml_all = malloc(sizeof(bde_csfml_t));
     MYSQL *con = NULL;
     MYSQL_RES *result = NULL;
+    char *password = my_getpass();
 
+    con = mysql_init(NULL);
+    if (mysql_real_connect(con, "10.137.215.21", "bde", password, c_my_db, 3306, NULL, 0) == NULL) {
+        printf("The authentication failed with the following message:\n");
+        printf("%s\n", mysql_error(con));
+        return (1);
+    }
     init_nfc(csfml_all);
     init_all_csfml(csfml_all);
     if (!csfml_all->begin.window || !csfml_all->begin.framebuffer)
         return (1);
     sfWindow_setFramerateLimit((sfWindow *)csfml_all->begin.window, 60);
-    con = mysql_init(NULL);
-    if (mysql_real_connect(con, "127.0.0.1", "USERS_DB_OWNER", "1234", c_my_db, 3306, NULL, 0) == NULL) {
-        printf("The authentication failed with the following message:\n");
-        printf("%s\n", mysql_error(con));
-        return (1);
-    }
+    sfRenderWindow_setMouseCursorVisible(csfml_all->begin.window, false);
     result = get_all_datas_from_table(con);
     csfml_all->sql.con = con;
     csfml_all->sql.res = result;
@@ -65,5 +67,6 @@ int main(int ac, char **av)
     nfc_close(csfml_all->nfc.pnd);
     nfc_exit(csfml_all->nfc.context);
     destroy_all(csfml_all);
+    free(password);
     return (0);
 }

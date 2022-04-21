@@ -24,8 +24,8 @@
     extern int screen_no_enouth[];  \
 
 enum size_window {
-    WIDTH = 1024,
-    HEIGHT = 600
+    WIDTH = 1280,
+    HEIGHT = 720
 };
 
 enum sprites {

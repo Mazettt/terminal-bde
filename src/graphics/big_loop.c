@@ -111,4 +111,6 @@ void big_loop_graphics(bde_csfml_t *csfml_all)
     check_click_buttons(csfml_all);
     check_mouse_on_all_buttons(csfml_all);
     draw_all(csfml_all);
+    if (!csfml_all->all_events.mouse.left);
+        sfMouse_setPositionRenderWindow((sfVector2i){0, 0}, csfml_all->begin.window);
 }
