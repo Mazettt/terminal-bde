@@ -22,6 +22,7 @@
     extern int screen_added_in_db[];    \
     extern int screen_debited[];    \
     extern int screen_no_enouth[];  \
+    extern int screen_error[];  \
 
 enum size_window {
     WIDTH = 1280,
@@ -49,6 +50,7 @@ enum sprites {
     SP_SCAN_ADMIN,
     SP_ADDED_IN_DB,
     SP_NO_ENOUTH,
+    SP_ERROR,
     NBR_SP
 };
 
@@ -61,6 +63,7 @@ enum screens {
     SC_ADDED_TO_DB,
     SC_DEBITED,
     SC_NO_ENOUTH,
+    SC_ERROR,
     NBR_SC
 };
 

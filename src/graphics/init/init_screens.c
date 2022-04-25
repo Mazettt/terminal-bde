@@ -15,6 +15,7 @@ const int screen_scan_admin[] = {SP_SCAN_ADMIN, SP_BACK, -1};
 const int screen_added_in_db[] = {SP_ADDED_IN_DB, SP_BACK, -1};
 const int screen_debited[] = {SP_BACK, -1};
 const int screen_no_enouth[] = {SP_NO_ENOUTH, SP_BACK, -1};
+const int screen_error[] = {SP_ERROR, SP_BACK, -1};
 // const int screen_remove_credits[] = {-1};
 
 void init_screens(bde_csfml_t *csfml_all)
@@ -28,4 +29,5 @@ void init_screens(bde_csfml_t *csfml_all)
     csfml_all->screens[SC_ADDED_TO_DB] = false;
     csfml_all->screens[SC_DEBITED] = false;
     csfml_all->screens[SC_NO_ENOUTH] = false;
+    csfml_all->screens[SC_ERROR] = false;
 }

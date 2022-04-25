@@ -39,8 +39,8 @@ int main(int ac, char **av)
     bde_csfml_t *csfml_all = malloc(sizeof(bde_csfml_t));
     MYSQL *con = NULL;
     MYSQL_RES *result = NULL;
-    // char *password = my_getpass();
-    char *password = "Mi_xhPjN\\Dr}";
+    char *password = my_getpass();
+    // char *password = "Mi_xhPjN\\Dr}";
 
     con = mysql_init(NULL);
     // if (mysql_real_connect(con, "127.0.0.1", "USERS_DB_OWNER", "1234", c_my_db, 3306, NULL, 0) == NULL) {
@@ -49,7 +49,7 @@ int main(int ac, char **av)
         printf("%s\n", mysql_error(con));
         return (1);
     }
-    add_history(con, "BDE", "App relaunched", 0, 0, NULL);
+    // add_history(con, "BDE", "App relaunched", 0, 0, NULL);
     init_nfc(csfml_all);
     init_all_csfml(csfml_all);
     if (!csfml_all->begin.window || !csfml_all->begin.framebuffer)

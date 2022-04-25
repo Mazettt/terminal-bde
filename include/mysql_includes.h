@@ -39,9 +39,9 @@ void print_all_table(MYSQL_RES *result);
 void print_datas(my_datas_t d);
 
 // modify database
-void add_data_to_table(MYSQL *con, my_datas_t d);
-void modify_one_row(MYSQL *con, char *id_card, int credits, int total_credits);
-void add_history(MYSQL *con, char *id_card, char *type_operation, int credits_modified, unsigned int credits_before, char *id_admin);
+bool add_data_to_table(MYSQL *con, my_datas_t d);
+bool modify_one_row(MYSQL *con, char *id_card, int credits, int total_credits);
+bool add_history(MYSQL *con, char *id_card, char *type_operation, int credits_modified, unsigned int credits_before, char *id_admin);
 
 // free
 void free_row(MYSQL_ROW row);

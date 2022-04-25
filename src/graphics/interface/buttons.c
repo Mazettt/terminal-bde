@@ -111,6 +111,9 @@ void button_num_0(bde_csfml_t *csfml_all)
 
 void button_num_check(bde_csfml_t *csfml_all)
 {
+    int buff = 0;
+    int buff_2 = 0;
+
     if (csfml_all->screens[SC_BUY]) {
         csfml_all->screens[SC_BUY] = false;
         toggle_spritesheet_scene(csfml_all, false, screen_buy, csfml_all->spritesheet);
@@ -118,21 +121,36 @@ void button_num_check(bde_csfml_t *csfml_all)
             csfml_all->screens[SC_NO_ENOUTH] = true;
             toggle_spritesheet_scene(csfml_all, true, screen_no_enouth, csfml_all->spritesheet);
         } else {
-            csfml_all->screens[SC_DEBITED] = true;
-            toggle_spritesheet_scene(csfml_all, true, screen_debited, csfml_all->spritesheet);
-            modify_one_row(csfml_all->sql.con, csfml_all->current_d.id_card, csfml_all->current_d.credits - atoi(csfml_all->text_numpad), csfml_all->current_d.total_credits);
-            add_history(csfml_all->sql.con, csfml_all->current_d.id_card, TYPE_BUY, atoi(csfml_all->text_numpad) * -1, csfml_all->current_d.credits, NULL);
+            if (!modify_one_row(csfml_all->sql.con, csfml_all->current_d.id_card, csfml_all->current_d.credits - atoi(csfml_all->text_numpad), csfml_all->current_d.total_credits)) {
+                csfml_all->screens[SC_ERROR] = true;
+                toggle_spritesheet_scene(csfml_all, true, screen_error, csfml_all->spritesheet);
+            } else {
+                add_history(csfml_all->sql.con, csfml_all->current_d.id_card, TYPE_BUY, atoi(csfml_all->text_numpad) * -1, csfml_all->current_d.credits, NULL);
+                csfml_all->screens[SC_DEBITED] = true;
+                toggle_spritesheet_scene(csfml_all, true, screen_debited, csfml_all->spritesheet);
+            }
         }
     }
     if (csfml_all->screens[SC_ADD_CREDITS]) {
         csfml_all->screens[SC_ADD_CREDITS] = false;
-        csfml_all->screens[SC_MENU] = true;
         toggle_spritesheet_scene(csfml_all, false, screen_add_credits, csfml_all->spritesheet);
-        toggle_spritesheet_scene(csfml_all, true, screen_menu, csfml_all->spritesheet);
-        modify_one_row(csfml_all->sql.con, csfml_all->current_d.id_card, csfml_all->current_d.credits + atoi(csfml_all->text_numpad), csfml_all->current_d.total_credits + atoi(csfml_all->text_numpad));
-        add_history(csfml_all->sql.con, csfml_all->current_d.id_card, TYPE_ADD_CREDITS, atoi(csfml_all->text_numpad), csfml_all->current_d.credits, csfml_all->current_admin_card);
-        csfml_all->current_d.credits = get_nbr_credits(csfml_all->sql.con, csfml_all->current_d.id_card);
-        csfml_all->current_d.total_credits = get_total_credits(csfml_all->sql.con, csfml_all->current_d.id_card);
+        if (!modify_one_row(csfml_all->sql.con, csfml_all->current_d.id_card, csfml_all->current_d.credits + atoi(csfml_all->text_numpad), csfml_all->current_d.total_credits + atoi(csfml_all->text_numpad))) {
+            csfml_all->screens[SC_ERROR] = true;
+            toggle_spritesheet_scene(csfml_all, true, screen_error, csfml_all->spritesheet);
+        } else {
+            add_history(csfml_all->sql.con, csfml_all->current_d.id_card, TYPE_ADD_CREDITS, atoi(csfml_all->text_numpad), csfml_all->current_d.credits, csfml_all->current_admin_card);
+            buff = get_nbr_credits(csfml_all->sql.con, csfml_all->current_d.id_card);
+            buff_2 = get_total_credits(csfml_all->sql.con, csfml_all->current_d.id_card);
+            if (buff == -1 || buff_2 == -1) {
+                csfml_all->screens[SC_ERROR] = true;
+                toggle_spritesheet_scene(csfml_all, true, screen_error, csfml_all->spritesheet);
+            } else {
+                csfml_all->screens[SC_MENU] = true;
+                toggle_spritesheet_scene(csfml_all, true, screen_menu, csfml_all->spritesheet);
+                csfml_all->current_d.credits = buff;
+                csfml_all->current_d.total_credits = buff_2;
+            }
+        }
     }
 }
 
@@ -198,6 +216,12 @@ void button_back(bde_csfml_t *csfml_all)
         csfml_all->screens[SC_MENU] = false;
         csfml_all->screens[SC_SCAN] = true;
         toggle_spritesheet_scene(csfml_all, false, screen_menu, csfml_all->spritesheet);
+        toggle_spritesheet_scene(csfml_all, true, screen_scan, csfml_all->spritesheet);
+    }
+    if (csfml_all->screens[SC_ERROR]) {
+        csfml_all->screens[SC_ERROR] = false;
+        csfml_all->screens[SC_SCAN] = true;
+        toggle_spritesheet_scene(csfml_all, false, screen_error, csfml_all->spritesheet);
         toggle_spritesheet_scene(csfml_all, true, screen_scan, csfml_all->spritesheet);
     }
 }

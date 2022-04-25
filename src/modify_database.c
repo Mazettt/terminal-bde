@@ -11,7 +11,7 @@ extern const char *c_my_db;
 extern const char *c_my_table;
 const char *c_table_history = "HISTORIQUE";
 
-void add_history(MYSQL *con, char *id_card, char *type_operation, int credits_modified, unsigned int credits_before, char *id_admin)
+bool add_history(MYSQL *con, char *id_card, char *type_operation, int credits_modified, unsigned int credits_before, char *id_admin)
 {
     char buff[2048];
 
@@ -23,11 +23,12 @@ void add_history(MYSQL *con, char *id_card, char *type_operation, int credits_mo
     if(mysql_query(con, buff) != 0) {
         printf("Query failed  with the following message:\n");
         printf("%s\n", mysql_error(con));
-        exit(1);
+        return (false);
     }
+    return (true);
 }
 
-void add_data_to_table(MYSQL *con, my_datas_t d)
+bool add_data_to_table(MYSQL *con, my_datas_t d)
 {
     char buff[2048];
 
@@ -35,10 +36,12 @@ void add_data_to_table(MYSQL *con, my_datas_t d)
     if(mysql_query(con, buff) != 0) {
         printf("Query failed  with the following message:\n");
         printf("%s\n", mysql_error(con));
+        return (false);
     }
+    return (true);
 }
 
-void modify_one_row(MYSQL *con, char *id_card, int credits, int total_credits)
+bool modify_one_row(MYSQL *con, char *id_card, int credits, int total_credits)
 {
     char buff[2048];
 
@@ -46,6 +49,7 @@ void modify_one_row(MYSQL *con, char *id_card, int credits, int total_credits)
     if(mysql_query(con, buff) != 0) {
         printf("Query failed  with the following message:\n");
         printf("%s\n", mysql_error(con));
-        exit(1);
+        return (false);
     }
+    return (true);
 }

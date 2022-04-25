@@ -85,4 +85,7 @@ void init_spritesheets(spritesheet_t *spritesheet, beginning_t *begin)
     set_one_sprite("assets/no_enouth.png", &spritesheet[SP_NO_ENOUTH],
     begin, (init_sprite_t){{WIDTH / 2, HEIGHT / 2}, {0.3, 0.3},
     {0, 0, 2705, 1623}, .clickable = false, .change_sprite_on_mouse = false, .active = false});
+    set_one_sprite("assets/error.png", &spritesheet[SP_ERROR],
+    begin, (init_sprite_t){{WIDTH / 2, HEIGHT / 2}, {0.3, 0.3},
+    {0, 0, 2705, 1623}, .clickable = false, .change_sprite_on_mouse = false, .active = false});
 }

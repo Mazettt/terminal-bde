@@ -41,7 +41,7 @@ int get_nbr_credits(MYSQL *con, char *id_card)
     if (mysql_query(con, buff) != 0) {
         printf("Query failed  with the following message:\n");
         printf("%s\n", mysql_error(con));
-        exit(1);
+        return (-1);
     }
     res = mysql_store_result(con);
     row = mysql_fetch_row(res);
@@ -62,7 +62,7 @@ int get_total_credits(MYSQL *con, char *id_card)
     if (mysql_query(con, buff) != 0) {
         printf("Query failed  with the following message:\n");
         printf("%s\n", mysql_error(con));
-        exit(1);
+        return (-1);
     }
     res = mysql_store_result(con);
     row = mysql_fetch_row(res);
@@ -81,7 +81,7 @@ MYSQL_ROW get_row_from_id(MYSQL *con, MYSQL_RES *res_buff, char *id_card)
     if (mysql_query(con, buff) != 0) {
         printf("Query failed  with the following message:\n");
         printf("%s\n", mysql_error(con));
-        exit(1);
+        return (NULL);
     }
     res_buff = mysql_store_result(con);
     row = mysql_fetch_row(res_buff);

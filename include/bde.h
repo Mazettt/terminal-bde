@@ -15,7 +15,7 @@
     #include "csfml_enums.h"
     #include <string.h>
     #define PRINT_ALL 0
-    #define MOUSE_ACTIVE 1
+    #define MOUSE_ACTIVE 0
     #define TYPE_ADDED_IN_DB "Added in db"
     #define TYPE_BUY "Bought product"
     #define TYPE_ADD_CREDITS "Added credits"

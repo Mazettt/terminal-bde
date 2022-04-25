@@ -29,14 +29,20 @@ void return_to_scan_menu(bde_csfml_t *csfml_all)
 void check_if_in_db(bde_csfml_t *csfml_all, char *card)
 {
     if (get_row_from_id(csfml_all->sql.con, csfml_all->sql.res, card) == NULL) {
-        add_data_to_table(csfml_all->sql.con, (my_datas_t){card, 0, false, 0});
-        add_history(csfml_all->sql.con, card, TYPE_ADDED_IN_DB, 0, 0, NULL);
-        if (PRINT_ALL)
-            printf("%s added in database\n", card);
-        csfml_all->screens[SC_MENU] = false;
-        csfml_all->screens[SC_ADDED_TO_DB] = true;
-        toggle_spritesheet_scene(csfml_all, false, screen_menu, csfml_all->spritesheet);
-        toggle_spritesheet_scene(csfml_all, true, screen_added_in_db, csfml_all->spritesheet);
+        if (!add_data_to_table(csfml_all->sql.con, (my_datas_t){card, 0, false, 0})) {
+            csfml_all->screens[SC_MENU] = false;
+            csfml_all->screens[SC_ERROR] = true;
+            toggle_spritesheet_scene(csfml_all, false, screen_menu, csfml_all->spritesheet);
+            toggle_spritesheet_scene(csfml_all, true, screen_error, csfml_all->spritesheet);
+        } else {
+            add_history(csfml_all->sql.con, card, TYPE_ADDED_IN_DB, 0, 0, NULL);
+            if (PRINT_ALL)
+                printf("%s added in database\n", card);
+            csfml_all->screens[SC_MENU] = false;
+            csfml_all->screens[SC_ADDED_TO_DB] = true;
+            toggle_spritesheet_scene(csfml_all, false, screen_menu, csfml_all->spritesheet);
+            toggle_spritesheet_scene(csfml_all, true, screen_added_in_db, csfml_all->spritesheet);
+        }
     }
 }
 
@@ -91,7 +97,7 @@ void check_timeout_screen(bde_csfml_t *csfml_all)
 {
     float time = sfClock_getElapsedTime(csfml_all->clock_screens).microseconds;
 
-    if (time >= 30000000) {
+    if (time >= 15000000) {
         return_to_scan_menu(csfml_all);
         sfClock_restart(csfml_all->clock_screens);
     }
@@ -112,7 +118,7 @@ void big_loop_graphics(bde_csfml_t *csfml_all)
     if (!csfml_all->screens[SC_SCAN])
         check_timeout_screen(csfml_all);
     if (PRINT_ALL)
-        printf("curren card: %s\n", csfml_all->current_d.id_card);
+        printf("current card: %s\n", csfml_all->current_d.id_card);
     check_click_buttons(csfml_all);
     check_mouse_on_all_buttons(csfml_all);
     draw_all(csfml_all);
