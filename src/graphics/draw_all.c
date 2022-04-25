@@ -18,7 +18,7 @@ void draw_spritesheets(beginning_t *begin, spritesheet_t *spritesheet)
 void draw_all_texts(bde_csfml_t *csfml_all)
 {
     char buff[50];
-    sfVector2f pos = {WIDTH / 2, 50};
+    sfVector2f pos = {WIDTH / 2, 80};
 
     if (csfml_all->screens[SC_ADD_CREDITS] || csfml_all->screens[SC_BUY]) {
         if (strlen(csfml_all->text_numpad) == 2)

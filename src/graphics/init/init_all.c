@@ -25,7 +25,8 @@ void init_all_csfml(bde_csfml_t *csfml_all)
 {
     csfml_all->begin.fps.clock = sfClock_create();
     csfml_all->begin.fps.timer = 0;
-    csfml_all->current_d = (my_datas_t){NULL, 0, false};
+    csfml_all->current_d = (my_datas_t){NULL, 0, false, 0};
+    csfml_all->current_admin_card = NULL;
     csfml_all->text_numpad = malloc(sizeof(char) * 5);
     csfml_all->text_numpad[0] = '\0';
     csfml_all->clock_screens = sfClock_create();

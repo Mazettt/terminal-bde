@@ -120,7 +120,8 @@ void button_num_check(bde_csfml_t *csfml_all)
         } else {
             csfml_all->screens[SC_DEBITED] = true;
             toggle_spritesheet_scene(csfml_all, true, screen_debited, csfml_all->spritesheet);
-            modify_one_row(csfml_all->sql.con, csfml_all->current_d.id_card, csfml_all->current_d.credits - atoi(csfml_all->text_numpad));
+            modify_one_row(csfml_all->sql.con, csfml_all->current_d.id_card, csfml_all->current_d.credits - atoi(csfml_all->text_numpad), csfml_all->current_d.total_credits);
+            add_history(csfml_all->sql.con, csfml_all->current_d.id_card, TYPE_BUY, atoi(csfml_all->text_numpad) * -1, csfml_all->current_d.credits, NULL);
         }
     }
     if (csfml_all->screens[SC_ADD_CREDITS]) {
@@ -128,8 +129,10 @@ void button_num_check(bde_csfml_t *csfml_all)
         csfml_all->screens[SC_MENU] = true;
         toggle_spritesheet_scene(csfml_all, false, screen_add_credits, csfml_all->spritesheet);
         toggle_spritesheet_scene(csfml_all, true, screen_menu, csfml_all->spritesheet);
-        modify_one_row(csfml_all->sql.con, csfml_all->current_d.id_card, csfml_all->current_d.credits + atoi(csfml_all->text_numpad));
+        modify_one_row(csfml_all->sql.con, csfml_all->current_d.id_card, csfml_all->current_d.credits + atoi(csfml_all->text_numpad), csfml_all->current_d.total_credits + atoi(csfml_all->text_numpad));
+        add_history(csfml_all->sql.con, csfml_all->current_d.id_card, TYPE_ADD_CREDITS, atoi(csfml_all->text_numpad), csfml_all->current_d.credits, csfml_all->current_admin_card);
         csfml_all->current_d.credits = get_nbr_credits(csfml_all->sql.con, csfml_all->current_d.id_card);
+        csfml_all->current_d.total_credits = get_total_credits(csfml_all->sql.con, csfml_all->current_d.id_card);
     }
 }
 

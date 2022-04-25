@@ -101,6 +101,7 @@ typedef struct {
     sfClock *clock_screens;
     char *text_numpad;
     my_datas_t current_d;
+    char *current_admin_card;
 } bde_csfml_t;
 
 #endif
