@@ -16,7 +16,7 @@ char *my_getpass(void)
     int c = 0;
     int i = 0;
 
-    tcgetattr( STDIN_FILENO, &oldt);
+    tcgetattr(STDIN_FILENO, &oldt);
     newt = oldt;
     newt.c_lflag &= ~(ICANON);
     if (tcsetattr( STDIN_FILENO, TCSANOW, &newt) != 0) {
@@ -25,8 +25,15 @@ char *my_getpass(void)
     }
     printf("Password: ");
     while((c = getchar()) != '\n') {
-        write(1, "\b*", 2);
-         password[i++] = c;
+        if ((c == 127 || c == 8)) {
+            for (int a = 0; a < (i != 0 ? 3 : 2); ++a)
+                write(1, "\b \b", 3);
+            if (i != 0)
+                password[--i] = 0;
+        } else {
+            write(1, "\b*", 2);
+            password[i++] = c;
+        }
         if (i >= size_malloc - 1) {
             size_malloc += 20;
             password = (char *)realloc(password, sizeof(char) * size_malloc);
