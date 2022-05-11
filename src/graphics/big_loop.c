@@ -46,11 +46,23 @@ void check_if_in_db(bde_csfml_t *csfml_all, char *card)
     }
 }
 
+char *my_getline(void)
+{
+    char *buff = NULL;
+    size_t n;
+
+    getline(&buff, &n, stdin);
+    return (buff);
+}
+
 void change_scene_if_card(bde_csfml_t *csfml_all)
 {
     char *card = NULL;
 
-    card = get_id_card(csfml_all);
+    if (WITH_READER)
+        card = get_id_card(csfml_all);
+    else
+        card = my_getline();
     if (card != NULL) {
         csfml_all->current_d = get_infos_from_id(csfml_all->sql.con, card);
         if (PRINT_ALL) {
@@ -73,7 +85,10 @@ void change_scene_if_admin_card(bde_csfml_t *csfml_all)
     char *card = NULL;
     my_datas_t d = {NULL, 0, false, 0};
 
-    card = get_id_card(csfml_all);
+    if (WITH_READER)
+        card = get_id_card(csfml_all);
+    else
+        card = my_getline();
     if (card != NULL) {
         d = get_infos_from_id(csfml_all->sql.con, card);
         csfml_all->current_admin_card = d.id_card;

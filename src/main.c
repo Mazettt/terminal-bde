@@ -7,8 +7,11 @@
 
 #include "../include/bde.h"
 
-// const char *c_my_db = "BDE_PAIEMENT_TERMINAL";
+#if DATABASE_BDE
 const char *c_my_db = "bde";
+#else
+const char *c_my_db = "BDE_PAIEMENT_TERMINAL";
+#endif
 const char *c_my_table = "USERS_CREDITS";
 
 void init_nfc(bde_csfml_t *csfml_all)
@@ -37,20 +40,25 @@ void init_nfc(bde_csfml_t *csfml_all)
 int main(int ac, char **av)
 {
     bde_csfml_t *csfml_all = malloc(sizeof(bde_csfml_t));
-    MYSQL *con = NULL;
+    MYSQL *con = mysql_init(NULL);
     MYSQL_RES *result = NULL;
+#if DATABASE_BDE
     char *password = my_getpass();
-    // char *password = "Mi_xhPjN\\Dr}";
 
-    con = mysql_init(NULL);
-    // if (mysql_real_connect(con, "127.0.0.1", "USERS_DB_OWNER", "1234", c_my_db, 3306, NULL, 0) == NULL) {
     if (mysql_real_connect(con, "10.137.215.21", "bde", password, c_my_db, 3306, NULL, 0) == NULL) {
         printf("The authentication failed with the following message:\n");
         printf("%s\n", mysql_error(con));
         return (1);
     }
-    // add_history(con, "BDE", "App relaunched", 0, 0, NULL);
-    init_nfc(csfml_all);
+#else
+    if (mysql_real_connect(con, "127.0.0.1", "USERS_DB_OWNER", "1234", c_my_db, 3306, NULL, 0) == NULL) {
+        printf("The authentication failed with the following message:\n");
+        printf("%s\n", mysql_error(con));
+        return (1);
+    }
+#endif
+    if (WITH_READER)
+        init_nfc(csfml_all);
     init_all_csfml(csfml_all);
     if (!csfml_all->begin.window || !csfml_all->begin.framebuffer)
         return (1);
@@ -71,10 +79,5 @@ int main(int ac, char **av)
     nfc_close(csfml_all->nfc.pnd);
     nfc_exit(csfml_all->nfc.context);
     destroy_all(csfml_all);
-    // free(password);
     return (0);
 }
-
-
-// rajouter table avec historique transactions
-// rajouter variable nombre total de credits achetés
